@@ -1,0 +1,61 @@
+.container{
+   width: 90%;
+   margin: auto;
+   margin-top: 3rem;
+}
+
+h1, h2 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.positivo {
+   color: green; 
+}
+
+.negativo {
+   color: red; 
+}
+
+button {
+   width: 20%;
+   margin-top: 1rem;
+   margin-left: 2rem;
+}
+
+mat-form-field {
+   width: 100%;
+}
+
+.mat-form-field-min {
+   width: 25%;
+   margin-left: 5rem;
+}
+
+table {
+   width: 100%;
+}
+
+.paginator-container {
+   display: flex;
+   justify-content: center;
+   margin: 0 auto;
+   width: 100%;
+}
+
+.edit {
+   color: rgb(0, 153, 255);
+   cursor: pointer
+}
+
+.delete {
+   color: red;
+   cursor: pointer
+}
+
+mat-radio-group {
+   display: flex;
+   justify-content: space-around;
+   margin-bottom: 1rem;
+}

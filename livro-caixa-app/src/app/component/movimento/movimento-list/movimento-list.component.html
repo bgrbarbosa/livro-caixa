@@ -1,0 +1,71 @@
+<div class="container">
+  <h1>Registros dos Movimentos</h1>
+
+  <button routerLink="/movimento/create" class="mat-elevation-z8" mat-stroked-button color="primary">Abrir
+    Movimento</button>
+  <mat-form-field appearance="standard">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field>
+
+  <mat-radio-group color="primary">
+    <mat-radio-button (click)="orderByStatus('ABERTO')">Aberto</mat-radio-button>
+    <mat-radio-button (click)="orderByStatus('FECHADO')" value="FECHADO">Fechado</mat-radio-button>
+    <mat-radio-button (click)="findAll(); orderByStatus('TODOS')" value="TODOS">Todos</mat-radio-button>
+  </mat-radio-group>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="Id">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.idMovimento}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Data">
+        <th mat-header-cell *matHeaderCellDef> Data </th>
+        <td mat-cell *matCellDef="let element"> {{element.data | date: 'yyyy-MM-dd': 'UTC+3'}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Obs">
+        <th mat-header-cell *matHeaderCellDef> Observação </th>
+        <td mat-cell *matCellDef="let element"> {{element.obs}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="Total Caixa">
+        <th mat-header-cell *matHeaderCellDef> Total Caixa </th>
+        <td [ngClass]="{'positivo': element.totalCaixa >= 0, 'negativo': element.totalCaixa < 0}" mat-cell *matCellDef="let element"> {{element.totalCaixa.toFixed(2)}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="Ações">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let element">
+          <a (click)="editMovimento(element.idMovimento)">
+            <i class="material-icons edit">edit</i>
+          </a>
+          <a (click)="deleteMovimento(element.idMovimento)">
+            <i class="material-icons delete">delete</i>
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator class="paginator-container" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+      aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+</div>

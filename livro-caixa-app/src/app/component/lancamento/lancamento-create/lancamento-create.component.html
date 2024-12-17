@@ -1,0 +1,97 @@
+<div class="container">
+    <h1>Movimento dia {{movimento.data}}</h1>
+    <h2 [ngClass]="{'positivo': totalCaixa >= 0, 'negativo': totalCaixa < 0}">
+        Saldo Caixa: {{totalCaixa.toFixed(2)}}
+    </h2>
+
+    <div>
+        <form class="form">
+            <mat-form-field class="mat-form-field-min">
+                <mat-label>Status do movimento</mat-label>
+                <mat-select [(ngModel)]="movimento.status" name="status" required disabled={{!controle}}>
+                    <mat-option value="ABERTO">ABERTO</mat-option>
+                    <mat-option value="FECHADO">FECHADO</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-min" appearance="legacy">
+                <mat-label>Data</mat-label>
+                <input [(ngModel)]="movimento.data" name="data" required matInput type="date"
+                    placeholder="Ex.. fulano de tal" maxlength="50" disabled={{!controle}}>
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-min" appearance="legacy">
+                <mat-label>Observação</mat-label>
+                <input [(ngModel)]="movimento.obs" name="obs" required matInput placeholder="Observação"
+                    disabled={{!controle}}>
+                <mat-icon matSuffix>pin</mat-icon>
+            </mat-form-field>
+        </form>
+    </div>
+
+    <button (click)="insertNew()" class="mat-elevation-z8" mat-stroked-button color="primary"
+        disabled="{{status}}">
+        Efetuar lançamentos
+    </button>
+    <button (click)="toggleControle()" class="mat-elevation-z8" mat-stroked-button color="accent"
+        disabled={{controle}}>Atualizar</button>
+    <button (click)="updateMovimento()" class="mat-elevation-z8" mat-stroked-button color="accent"
+        disabled={{!controle}}>Salvar modificações</button>
+    <button (click)="cancel()" class="mat-elevation-z8" mat-stroked-button color="warn">Sair</button>
+
+    <mat-form-field appearance="standard">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="Id">
+                <th mat-header-cell *matHeaderCellDef> Id. </th>
+                <td mat-cell *matCellDef="let element"> {{element.idLancamento}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="Tipo">
+                <th mat-header-cell *matHeaderCellDef> Tipo </th>
+                <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="Descrição">
+                <th mat-header-cell *matHeaderCellDef> Descrição </th>
+                <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Valor">
+                <th mat-header-cell *matHeaderCellDef> Valor </th>
+                <td mat-cell *matCellDef="let element" [ngClass]="{'positivo': element.valor >= 0, 'negativo': element.valor < 0}">R$ {{element.valor.toFixed(2)}}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="Ações">
+                <th mat-header-cell *matHeaderCellDef> Ações </th>
+                <td mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="!status">
+                        <a (click)="updateLancamento(element.idLancamento)">
+                            <i class="material-icons edit">edit</i>
+                        </a>
+                        <a (click)="deleteLancamento(element.idLancamento)">
+                            <i class="material-icons delete">delete</i>
+                        </a>
+                    </ng-container>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator class="paginator-container" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+            aria-label="Select page of periodic elements">
+        </mat-paginator>
+    </div>
+</div>

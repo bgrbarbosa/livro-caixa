@@ -1,0 +1,32 @@
+.card {
+    width: 70%;
+    margin: 1rem auto;
+    margin-top: 1rem;
+    background-color: rgb(243, 241, 241);
+ }
+ 
+ img {
+    width: 90%;
+    height: 20rem;;
+ }
+
+ .table-container {
+   width: 100%;
+ }
+ 
+ .table-container table {
+   width: 100%;
+   border-collapse: collapse;
+   text-align: center;
+ }
+ 
+ .table-container th,
+ .table-container td {
+   border: 1px solid #ddd;
+   padding: 8px;
+   width: 20%;
+ }
+ 
+ .table-container th {
+   background-color: #f0f0f0;
+ }
